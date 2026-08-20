@@ -1,0 +1,17 @@
+# Binaries
+/bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace / build cache
+go.work
+go.work.sum
+
+# IDE
+.vscode/
+.idea/
