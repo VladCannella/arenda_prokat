@@ -1,3 +1,6 @@
 package domain
 
-// TODO: Customer — встраивает BaseEntity
+type Customer struct {
+	BaseEntity
+	Name string
+}

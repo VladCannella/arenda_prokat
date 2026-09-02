@@ -1,4 +1,11 @@
 package domain
 
-// TODO: Rental — встраивает BaseEntity
-// TODO: расчёт стоимости через PricingStrategy, штраф за просрочку
+import "time"
+
+type Rental struct {
+	BaseEntity
+	CustomerID     ID
+	ItemID         ID
+	Period         Period
+	ActualReturnAt time.Time
+}

@@ -1,3 +1,10 @@
 package domain
 
-// TODO: BaseEntity{ ID, CreatedAt } — встраивается в Item, Customer, Rental
+import "time"
+
+type ID string
+
+type BaseEntity struct {
+	ID        ID
+	CreatedAt time.Time
+}
