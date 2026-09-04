@@ -2,5 +2,6 @@ package domain
 
 type Customer struct {
 	BaseEntity
-	Name string
+	Name        string
+	RentalCount int64
 }
