@@ -2,10 +2,6 @@ package domain
 
 import "errors"
 
-// TODO: PricingStrategy — интерфейс с одним методом (OCP)
-// TODO: реализации DailyPricing, WeeklyDiscountPricing, LoyalCustomerPricing —
-// решить, в каком слое им место (интерфейс объявляется там, где используется)
-
 var ErrInvalidDiscount = errors.New("pricing: discount value is invalid")
 
 type PricingStrategy interface {
