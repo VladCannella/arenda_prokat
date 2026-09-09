@@ -8,6 +8,7 @@ import (
 var ErrItemAlreadyRented = errors.New("item: item already rented")
 var ErrItemNotFound = errors.New("item: item not found")
 var ErrRentalClosed = errors.New("rental: rental is closed")
+var ErrEntityNotFound = errors.New("domain: element not found")
 
 type ValidationError struct {
 	Field  string
