@@ -84,3 +84,46 @@ func (s *RentalService) RentItem(itemID, customerID domain.ID, start, end time.T
 
 	return rental, nil
 }
+
+func (s *RentalService) ReturnItem(rentalID domain.ID, returnedAt time.Time) (penalty domain.Money, err error) {
+
+	defer func() {
+		if err != nil {
+			err = fmt.Errorf("return item %s: %w", rentalID, err)
+		}
+	}()
+
+	rental, err := s.rentals.FindByID(rentalID)
+	if err != nil {
+		return domain.Money{}, err
+	}
+
+	if !rental.ActualReturnAt.IsZero() {
+		return domain.Money{}, domain.ErrRentalClosed
+	}
+
+	item, err := s.items.FindByID(rental.ItemID)
+	if err != nil {
+		return domain.Money{}, err
+	}
+
+	overrun := rental.Period.LateDays(returnedAt)
+	penalty = item.DailyRate.MulInt(overrun)
+
+	rental.ActualReturnAt = returnedAt
+	item.Status = domain.ItemAvailable
+
+	if err := s.items.Save(item); err != nil {
+		return domain.Money{}, err
+	}
+
+	if err := s.rentals.Save(rental); err != nil {
+		return domain.Money{}, err
+	}
+
+	if err := s.notify.Notify(fmt.Sprintf("вещь %s возвращена, перерасход составляет %s", rental.ItemID, penalty)); err != nil {
+		return domain.Money{}, err
+	}
+	return penalty, nil
+
+}
