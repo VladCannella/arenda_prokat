@@ -35,3 +35,12 @@ func (p Period) Days() int64 {
 	days := math.Ceil(duration.Hours() / 24)
 	return int64(days)
 }
+
+func (p Period) LateDays(actual time.Time) int64 {
+	if !actual.After(p.end) {
+		return 0
+	}
+
+	lateDuration := actual.Sub(p.end)
+	return int64(math.Ceil(lateDuration.Hours() / 24))
+}

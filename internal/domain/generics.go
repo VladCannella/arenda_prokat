@@ -1,8 +1,5 @@
 package domain
 
-// TODO: Filter[T any], Map[T, U any], Reduce
-// TODO: constraint с ~ (например type ID ~string) — зачем нужна тильда
-
 func Filter[T any](items []T, predicate func(T) bool) []T {
 	result := make([]T, 0, len(items))
 	for _, i := range items {
